@@ -1,0 +1,127 @@
+{
+	"nodes":[
+		{"id":"116765a6ff287326","type":"text","text":"### Propriedades\n\n> [!danger] Derivação no Tempo (Com Condições Iniciais)\n> Cada ordem de derivada traz os valores de contorno em $0^-$:\n> - $\\mathcal{L}\\left\\{\\frac{dx(t)}{dt}\\right\\} = sX(s) - x(0^-)$\n> - $\\mathcal{L}\\left\\{\\frac{d^2x(t)}{dt^2}\\right\\} = s^2X(s) - sx(0^-) - \\dot{x}(0^-)$\n> - $\\mathcal{L}\\left\\{\\frac{d^3x(t)}{dt^3}\\right\\} = s^3X(s) - s^2x(0^-) - s\\dot{x}(0^-) - \\ddot{x}(0^-)$\n\n> [!tip] Deslocamentos e Operações de Frequência\n> - **Atraso no Tempo:** $x(t - t_0)u(t - t_0) \\iff e^{-st_0}X(s)$\n> - **Deslocamento na Frequência:** $e^{s_0 t}x(t) \\iff X(s - s_0)$\n> - **Escalonamento no Tempo:** $x(at) \\iff \\frac{1}{|a|}X\\left(\\frac{s}{a}\\right) \\quad (a > 0)$\n> - **Sinal Causal Periódico ($T_0$):** $x(t) = x(t + T_0) \\implies X(s) = \\frac{X_0(s)}{1 - e^{-sT_0}}$ *(onde $X_0(s)$ é o 1º período $[0, T_0)$)*\n> - **Integração no Tempo:** $\\int_{0^-}^{t} x(\\tau) d\\tau \\iff \\frac{X(s)}{s}$\n> - **Multiplicação por $t$:** $t x(t) \\iff -\\frac{d}{ds}X(s) \\quad \\text{ou} \\quad t^n x(t) \\iff (-1)^n \\frac{d^n}{ds^n}X(s)$\n> - **Divisão por $t$ (Integração na Freq.):** $\\frac{x(t)}{t} \\iff \\int_s^\\infty X(u) du$\n> - **Convolução no Tempo:** $x_1(t) * x_2(t) \\iff X_1(s)X_2(s)$\n> - **Convolução na Frequência:** $x_1(t)x_2(t) \\iff \\frac{1}{2\\pi j}[X_1(s) * X_2(s)]$\n\n> [!warning] Teoremas do Valor Inicial e Final\n> - **Valor Inicial:** $x(0^+) = \\lim_{s \\to \\infty} sX(s)$\n>   - **Atenção:** Só é válido se $X(s)$ for **estritamente própria** ($M < N$). Se $M \\ge N$, a divisão polinomial gera termos de impulsos $\\delta(t)$ na origem que invalidam o cálculo ingênuo.\n> - **Valor Final:** $x(\\infty) = \\lim_{s \\to 0} sX(s)$\n>   - **Atenção:** Só é válido se **todos os polos de $sX(s)$ estiverem no SPE** (parte real estritamente negativa). Não aplique se houver polos no SPD ou repetidos sobre o eixo imaginário!","x":400,"y":360,"width":580,"height":720},
+		{"id":"77ec18668f4562bf","type":"text","text":"### Inversão por Frações Parciais\n\n> [!info] Regra Geral\n> Expanda $X(s)$ **DIRETAMENTE** (diferente de Z, não precisa dividir por variável nenhuma). O objetivo é comparar com as transformadas elementares da tabela.\n\n> [!example]- Os 4 Casos de Decomposição\n> - **Caso 1 (Polos Reais Simples):**\n>   $$A_k = \\left. X(s)(s - p_k) \\right|_{s = p_k} \\implies A_k e^{p_k t}u(t)$$\n> - **Caso 2 (Polos Complexos Conjugados $p_{1,2} = -\\alpha \\pm j\\omega_0$):**\n>   Calcule o resíduo $A_1 = \\left. X(s)(s + \\alpha - j\\omega_0) \\right|_{s = -\\alpha + j\\omega_0} = r_1 e^{j\\theta_1}$.\n>   Inversa direta:\n>   $$x(t) = 2r_1 e^{-\\alpha t} \\cos(\\omega_0 t + \\theta_1)u(t)$$\n> - **Caso 3 (Polos Reais Repetidos de multiplicidade $r$):**\n>   $$B_k = \\frac{1}{k!} \\frac{d^k}{ds^k} \\left[ X(s)(s - p_1)^r \\right]_{s = p_1}, \\quad k = 0, \\dots, r-1$$\n>   *(Termos geram saídas no formato $\\frac{t^k}{k!} e^{p_1 t}u(t)$).*\n> - **Caso 4 (Fração Imprópria: Grau do Num $M \\ge N$ Grau do Den):**\n>   Faça a **divisão polinomial** antes de expandir:\n>   $$X(s) = E(s) + \\frac{R(s)}{Q(s)}$$\n>   O polinômio quociente $E(s)$ gera impulsos e derivadas de impulso no tempo ($\\delta(t), \\delta'(t)\\dots$).\n\n> [!tip] Atalho de Ouro para Fração Biprópria ($M = N$)\n> Se o grau do numerador for igual ao do denominador ($M = N$), não precisa fazer divisão longa!\n> $$X(s) = b_0 + \\sum_{k=1}^N \\frac{A_k}{s - p_k}, \\quad \\text{onde } b_0 = \\lim_{s \\to \\infty} X(s) = \\frac{b_N}{a_N}$$\n> A inversa imediata gera um impulso puro: $x(t) = b_0 \\delta(t) + \\sum A_k e^{p_k t} u(t)$.","x":400,"y":1160,"width":580,"height":600},
+		{"id":"1bfafc15b061a490","type":"text","text":"### Resolução de EDOs\n\n> [!info] Metodologia\n> 1. Aplique Laplace em ambos os lados da EDO.\n> 2. Substitua os valores das condições iniciais $y(0^-), \\dot{y}(0^-), \\dots$\n> 3. Isole $Y(s)$:\n>    $$Q(s)Y(s) - \\text{termos de C.I.} = P(s)X(s)$$\n\n> [!quote] As Duas Decomposições da Resposta $y(t)$\n> - **Entrada Nula ($y_0(t)$) vs Estado Nulo ($y_\\phi(t)$):**\n>   - $y_0(t)$: Depende **apenas das condições iniciais** (entrada $x(t) = 0$).\n>   - $y_\\phi(t)$: Depende **apenas da entrada** (condições iniciais nulas, equivale à convolução $x(t) * h(t)$).\n> - **Natural ($y_n(t)$) vs Forçada ($y_f(t)$):**\n>   - $y_n(t)$: Modos associados aos **polos do sistema** (raízes de $Q(s)$).\n>   - $y_f(t)$: Modos associados aos **polos do sinal de entrada** (raízes da entrada).\n\n> [!danger] Perigo de Prova: Salto de C.I. ($0^-$ vs $0^+$) sob Impulsos\n> Se a entrada $x(t)$ contiver impulsos $\\delta(t)$ ou suas derivadas em $t = 0$:\n> - As variáveis $y(t), \\dot{y}(t)$ sofrem descontinuidade (salto) instantâneo entre $t = 0^-$ e $t = 0^+$.\n> - A transformada de Laplace unilateral DEVE ser sempre aplicada no instante $0^-$ (onde as condições iniciais refletem o estado pré-estímulo). Avaliar em $0^+$ ignora a energia transferida pelo impulso e gera resposta incorreta!","x":400,"y":1960,"width":580,"height":620},
+		{"id":"676920311d7699dc","type":"text","text":"### Função de Transferência e Estabilidade\n\n> [!info] Função de Transferência\n> Definida sob **condições iniciais nulas** (sistema em repouso):\n> $$H(s) = \\frac{Y(s)}{X(s)} = \\frac{b_0 s^M + b_1 s^{M-1} + \\dots + b_M}{s^N + a_1 s^{N-1} + \\dots + a_N}$$\n> A resposta ao impulso do sistema é $h(t) = \\mathcal{L}^{-1}\\{H(s)\\}$.\n\n> [!danger] Condição de Estabilidade Causal (SPE)\n> O sistema é BIBO estável se e somente se $h(t)$ for absolutamente integrável ($\\int_0^\\infty |h(t)| dt < \\infty$):\n> - **Assintoticamente Estável:** **TODOS** os polos de $H(s)$ estão estritamente no **SPE** (Semiplano Esquerdo: $\\text{Re}\\{p_k\\} < 0$).\n> - **Instável:** Pelo menos UM polo no **SPD** ($\\text{Re}\\{p_k\\} > 0$), polos repetidos no eixo imaginário, **OU se $M > N$** (pois sobra termo livre em $s$, derivador puro que amplifica ruído).\n> - **Marginalmente Estável:** Nenhum polo no SPD e polos SIMPLES (não repetidos) sobre o **eixo imaginário** ($\\text{Re}\\{p_k\\} = 0$).","x":400,"y":2760,"width":580,"height":520},
+		{"id":"8fdebe49ed1c3a9d","type":"text","text":"### Diagrama de Blocos & Sistemas Inversos\n\n> [!tip] Álgebra de Diagramas de Blocos\n> - **Série (Cascata):** $H_{eq}(s) = H_1(s) \\cdot H_2(s)$\n> - **Paralelo (Soma):** $H_{eq}(s) = H_1(s) + H_2(s)$\n> - **Realimentação Negativa:** $H_{eq}(s) = \\frac{G(s)}{1 + G(s)H(s)}$\n\n> [!info] Sistema Inverso\n> Recupera a entrada original $x(t)$ a partir de $y(t)$:\n> $$H_i(s) = \\frac{1}{H(s)}$$\n> - Os **Polos** de $H_i(s)$ são os **Zeros** de $H(s)$.\n> - Os **Zeros** de $H_i(s)$ são os **Polos** de $H(s)$.\n\n> [!danger] Inversibilidade Causal e Estável\n> Para que $H(s)$ e $H_i(s)$ sejam **simultaneamente causais e estáveis**:\n> 1. $H(s)$ deve ser **biprópria** ($M = N$, mesmo grau no numerador e denominador).\n> 2. **Sistema de Fase Mínima:** **TODOS** os polos e **TODOS** os zeros de $H(s)$ devem estar estritamente no **SPE** ($\\text{Re}\\{s\\} < 0$).","x":400,"y":3580,"width":580,"height":520},
+		{"id":"61d2d45a7cd056b0","type":"text","text":"### Definição, RDC e Polos/Zeros\n\n> [!info] Definição Unilateral\n> Como lidamos com sistemas causais ($t \\ge 0$):\n> $$X(s) = \\int_{0^-}^{\\infty} x(t)e^{-st} dt, \\quad s = \\sigma + j\\omega$$\n> *(O limite $0^-$ é crucial para capturar impulsos $\\delta(t)$ na origem).*\n\n> [!warning] Região de Convergência (RDC)\n> A integral converge absolutamente se $\\int_{0^-}^{\\infty} |x(t)e^{-\\sigma t}| dt < \\infty$.\n> - A RDC depende **apenas da parte real** $\\sigma = \\text{Re}\\{s\\}$.\n> - Para sinais causais, a RDC é sempre um semiplano à direita do polo mais à direita: $\\text{Re}\\{s\\} > \\sigma_{\\min}$.\n> - Para sinais de **duração finita**, a RDC é **todo o plano $s$**.\n\n> [!tip] Diagrama de Polos e Zeros\n> Se $X(s) = \\frac{P(s)}{Q(s)} = K \\frac{(s - z_1)\\dots(s - z_M)}{(s - p_1)\\dots(s - p_N)}$:\n> - **Zeros ($\\circ$):** Raízes do numerador $P(s)$ (fazem $X(s) = 0$).\n> - **Polos ($\\times$):** Raízes do denominador $Q(s)$ (fazem $X(s) \\to \\infty$).","x":400,"y":4400,"width":580,"height":500},
+		{"id":"7799421a6e914474","type":"file","file":"Banco de Questões/Prob 4.1 - 3b.md","x":2000,"y":2165,"width":580,"height":500,"color":"3"},
+		{"id":"33ab1c44dd4e5e5d","type":"file","file":"Banco de Questões/Prob 4.3 - 1b 4.3 - 2b.md","x":2000,"y":2885,"width":580,"height":465,"color":"1"},
+		{"id":"7d55e4aaba70e969","type":"file","file":"Banco de Questões/Prob 4.3 - 5a.md","x":2000,"y":3570,"width":580,"height":440,"color":"4"},
+		{"id":"4d5bfe599af3ee47","type":"file","file":"Banco de Questões/Prob 4.5 - 3b.md","x":2000,"y":4230,"width":580,"height":520,"color":"1"},
+		{"id":"d6acfdd2a17ef1df","type":"file","file":"Banco de Questões/Prob 4.2 - 3a.md","x":2000,"y":150,"width":580,"height":440,"color":"3"},
+		{"id":"13505a5ccb853987","type":"file","file":"Banco de Questões/Prob 4.2 - 4a.md","x":2000,"y":810,"width":580,"height":475,"color":"1"},
+		{"id":"5d98c177c5a90b5e","type":"file","file":"Banco de Questões/Prob 4.1 - 3a.md","x":2000,"y":1505,"width":580,"height":440,"color":"4"},
+		{"id":"11dffe7570c29f09","type":"text","text":"### **Transformada de Laplace**","x":541,"y":0,"width":299,"height":60},
+		{"id":"225b7d1ace64721e","type":"text","text":"### Resposta Forçada ($y_f(t)$) e Regime Permanente ($y_{ss}(t)$)\n\n> [!tip] Atalhos de Resposta Forçada (Sem Fazer Frações Parciais)\n> Se $H(s)$ for finita no ponto avaliado:\n> 1. **Entrada Exponencial $x(t) = e^{\\lambda t}u(t)$:** \n>    $$y_f(t) = H(\\lambda)e^{\\lambda t}u(t)$$\n> 2. **Entrada Degrau $x(t) = K u(t)$ (caso $\\lambda = 0$):** \n>    $$y_f(t) = K \\cdot H(0)u(t) \\quad \\text{(Basta trocar } s=0 \\text{ em } H(s)\\text{)}$$\n> 3. **Entrada Senoidal $x(t) = \\cos(\\omega t + \\theta)u(t)$:** \n>    $$y_f(t) = |H(j\\omega)| \\cos(\\omega t + \\theta + \\angle H(j\\omega))u(t)$$\n>    *(Substitua $s$ por $j\\omega$, calcule o módulo e a fase do número complexo).*\n\n> [!danger] Regime Permanente ($t \\to \\infty$)\n> Se o sistema for **ESTÁVEL**, a resposta natural $y_n(t)$ decai para zero quando $t \\to \\infty$, logo:\n> $$y_{ss}(t) = \\lim_{t \\to \\infty} y(t) = y_f(t)$$","x":-520,"y":2760,"width":580,"height":520},
+		{"id":"c1a4e8d25b7391f0","type":"text","text":"### Critério de Estabilidade de Routh-Hurwitz\n\n> [!info] Objetivo\n> Determinar se existem raízes no SPD ($\\text{Re}\\{s\\} > 0$) da equação característica $Q(s) = a_n s^n + a_{n-1} s^{n-1} + \\dots + a_1 s + a_0 = 0$ **sem fatorar** o polinômio.\n\n> [!warning] Condição Necessária\n> Todos os coeficientes $a_k$ devem existir (não nulos) e ter o **mesmo sinal**. Se faltar algum termo ou houver troca de sinal nos coeficientes, o sistema é **instável**.\n\n> [!tip] Montagem da Tabela de Routh\n> Organize as duas primeiras linhas alternando os coeficientes:\n> $$\\begin{array}{c|cccc}\n> s^n & a_n & a_{n-2} & a_{n-4} & \\dots \\\\\n> s^{n-1} & a_{n-1} & a_{n-3} & a_{n-5} & \\dots \\\\\n> s^{n-2} & b_1 & b_2 & b_3 & \\dots \\\\\n> s^{n-3} & c_1 & c_2 & c_3 & \\dots\n> \\end{array}$$\n> Os coeficientes subsequentes são calculados por determinantes cruzados:\n> $$b_1 = \\frac{a_{n-1}a_{n-2} - a_n a_{n-3}}{a_{n-1}}, \\quad b_2 = \\frac{a_{n-1}a_{n-4} - a_n a_{n-5}}{a_{n-1}}$$\n\n> [!danger] Regra Decisória do Lathi\n> 1. **Número de polos no SPD** = **Número de trocas de sinal** na **primeira coluna** da tabela.\n> 2. O sistema é **assintoticamente estável** se e somente se **todos os elementos da primeira coluna forem estritamente positivos** (mesmo sinal).\n> 3. **Linha de Zeros (Caso Especial):** Indica raízes simétricas em relação à origem (polos sobre o eixo imaginário $\\pm j\\omega_0$). Deriva-se o polinômio auxiliar da linha anterior para continuar.","x":-520,"y":1960,"width":580,"height":620},
+		{"id":"e8f49b1a7d2c3560","type":"text","text":"### Realização de Sistemas & Relação Degrau/Impulso\n\n> [!tip] Relação Resposta ao Degrau ($g(t)$) vs Impulso ($h(t)$)\n> Como a entrada degrau é $u(t) = \\int_{0^-}^t \\delta(\\tau)d\\tau$, pela linearidade e invariância no tempo:\n> $$g(t) = \\int_{0^-}^t h(\\tau) d\\tau = \\mathcal{L}^{-1}\\left\\{\\frac{H(s)}{s}\\right\\} \\iff h(t) = \\frac{dg(t)}{dt}$$\n> *(Dada a resposta ao degrau, basta derivá-la para achar a resposta ao impulso $h(t)$).*\n\n> [!info] Elementos Construtivos Básicos\n> Qualquer função de transferência $H(s) = \\frac{Y(s)}{X(s)} = \\frac{b_M s^M + \\dots + b_0}{s^N + a_{N-1}s^{N-1} + \\dots + a_0}$ pode ser sintetizada por:\n> 1. **Integradores ($\\frac{1}{s}$):** Preferidos a derivadores ($s$) pois derivadores amplificam ruído de alta frequência.\n> 2. **Multiplicadores de Ganho** (coeficientes $a_k, b_k$).\n> 3. **Somadores.**\n\n> [!example]- As 4 Formas de Realização do Lathi\n> - **Forma Direta I:** Implementa separadamente os polos e os zeros (requer $N + M$ integradores).\n> - **Forma Direta II (Canônica):** Inverte a ordem das operações e compartilha os mesmos integradores para polos e zeros. Requer o **número mínimo de integradores** ($N = \\text{ordem do sistema}$).\n> - **Forma Cascata:** Fatora $H(s) = H_1(s) \\cdot H_2(s) \\cdots H_k(s)$ em subsistemas de 1ª ordem (polos reais) e 2ª ordem (biquads para polos complexos).\n> - **Forma Paralela:** Expande $H(s) = c_0 + \\sum_{k=1}^N \\frac{A_k}{s - p_k}$ em frações parciais; cada subsistema opera em paralelo com entradas comuns somadas na saída.","x":-520,"y":4400,"width":580,"height":570}
+	],
+	"edges":[
+		{"id":"608e8c5c37354662","toFloating":false,"fromNode":"1bfafc15b061a490","fromSide":"left","toNode":"116765a6ff287326","toSide":"left","label":"Derivadas\ncom C.I."},
+		{"id":"5da3d68a9b40074e","fromNode":"1bfafc15b061a490","fromSide":"top","toNode":"77ec18668f4562bf","toSide":"bottom","label":"Achar y(t)"},
+		{"id":"e667dd6e1e1d20fc","fromNode":"1bfafc15b061a490","fromSide":"bottom","toNode":"676920311d7699dc","toSide":"top","label":"Se C.I. nulas (repouso)"},
+		{
+			"id":"71a30ce8849ff737",
+			"fromFloating":false,
+			"styleAttributes":{
+				"pathfindingMethod":null
+			},
+			"fromNode":"676920311d7699dc",
+			"fromSide":"left",
+			"toNode":"61d2d45a7cd056b0",
+			"toSide":"left",
+			"label":"Polos ditam\nfronteira da\nRDC"
+		},
+		{"id":"02e54a72736972fc","fromNode":"676920311d7699dc","fromSide":"bottom","toNode":"8fdebe49ed1c3a9d","toSide":"top","label":"Inversão Hi=1/H"},
+		{
+			"id":"7a8794a0ba4b8ae2",
+			"toFloating":false,
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"77ec18668f4562bf",
+			"fromSide":"right",
+			"toNode":"5d98c177c5a90b5e",
+			"toSide":"left",
+			"color":"4",
+			"label":"Polos Reais Simples"
+		},
+		{"id":"0bc653eb838b9dd6","fromNode":"676920311d7699dc","fromSide":"right","toNode":"7d55e4aaba70e969","toSide":"left","color":"4","label":"EDO para H(s)"},
+		{
+			"id":"6078f25e0a588b63",
+			"fromFloating":false,
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"77ec18668f4562bf",
+			"fromSide":"right",
+			"toNode":"7799421a6e914474",
+			"toSide":"left",
+			"color":"3",
+			"label":"Polos Complexos"
+		},
+		{
+			"id":"ddf76839839e98c1",
+			"fromFloating":false,
+			"styleAttributes":{"pathfindingMethod":"a-star"},
+			"fromNode":"116765a6ff287326",
+			"fromSide":"right",
+			"toNode":"d6acfdd2a17ef1df",
+			"toSide":"left",
+			"color":"3",
+			"label":"Atraso temporal e^(-st0)"
+		},
+		{
+			"id":"b9d3d9466e634ea1",
+			"fromFloating":false,
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"toFloating":false,
+			"fromNode":"1bfafc15b061a490",
+			"fromSide":"right",
+			"toNode":"33ab1c44dd4e5e5d",
+			"toSide":"left",
+			"color":"1",
+			"label":"EDO com C.I. Completa"
+		},
+		{
+			"id":"441c257d826b4952",
+			"fromFloating":false,
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"116765a6ff287326",
+			"fromSide":"right",
+			"toNode":"13505a5ccb853987",
+			"toSide":"left",
+			"color":"1",
+			"label":"Sinal Periódico"
+		},
+		{"id":"4858e662e86a7a2e","fromFloating":false,"fromNode":"8fdebe49ed1c3a9d","fromSide":"right","toNode":"4d5bfe599af3ee47","toSide":"left","color":"1","label":"Estabilidade Malha\nFechada (K)"},
+		{"id":"14afc44f175afd1f","fromNode":"676920311d7699dc","fromSide":"left","toNode":"225b7d1ace64721e","toSide":"right","label":"Se estável:\natalhos H(0) e H(jω)"},
+		{
+			"id":"4c08e6f139f72bbb",
+			"fromFloating":false,
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"676920311d7699dc",
+			"fromSide":"left",
+			"toNode":"116765a6ff287326",
+			"toSide":"left",
+			"color":"1",
+			"label":"Checar SPE\nantes de TVF!"
+		},
+		{
+			"id":"88ff363491544269",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"11dffe7570c29f09",
+			"fromSide":"bottom",
+			"toNode":"116765a6ff287326",
+			"toSide":"top",
+			"label":"Tabelas e Regras"
+		},
+		{"id":"a1b2c3d4e5f67890","fromNode":"11dffe7570c29f09","fromSide":"bottom","toNode":"61d2d45a7cd056b0","toSide":"top","label":"Existência"},
+		{"id":"b3c8f9104a7e25d1","fromNode":"676920311d7699dc","fromSide":"left","toNode":"c1a4e8d25b7391f0","toSide":"right","color":"1","label":"Checar SPD sem fatorar\n(Routh-Hurwitz)"},
+		{"id":"d7a5b391e04f82c6","fromFloating":false,"fromNode":"8fdebe49ed1c3a9d","fromSide":"left","toNode":"e8f49b1a7d2c3560","toSide":"right","label":"Síntese em integradores\n1/s e Degrau x Impulso"},
+		{"id":"a1b2c3d4e5f67891","fromNode":"c1a4e8d25b7391f0","fromSide":"right","toNode":"4d5bfe599af3ee47","toSide":"left","color":"1","label":"Aplicação Prática\n(Faixa de K)"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

@@ -1,0 +1,120 @@
+{
+	"nodes":[
+		{"id":"fd821a27a1d541bf","type":"text","text":"### Definição, RDC e Diagrama de Polos/Zeros\n\n> [!info] Definição Unilateral\n> Como tratamos de sistemas causais ($n \\ge 0$):\n> $$X(z) = \\sum_{n=0}^{\\infty} x[n]z^{-n}, \\quad z = re^{j\\Omega}$$\n\n> [!warning] Região de Convergência (RDC)\n> A transformada converge se $x[n]r^{-n}$ for absolutamente somável:\n> $$\\sum_{n=0}^{\\infty} |x[n]r^{-n}| < \\infty$$\n> Como $r = |z|$, a RDC é sempre expressa em função do **módulo** $|z|$ (círculos concêntricos no plano complexo).\n\n> [!tip] Diagrama de Polos e Zeros\n> Se $X(z) = \\frac{P(z)}{Q(z)}$:\n> - **Zeros ($\\circ$):** Raízes do numerador $P(z)$ (fazem $X(z) = 0$).\n> - **Polos ($\\times$):** Raízes do denominador $Q(z)$ (fazem $X(z) \\to \\infty$).","x":-1270,"y":-900,"width":660,"height":671},
+		{"id":"11dffe7570c29f09","type":"text","text":"### **Transformada Z**","x":-1041,"y":-1120,"width":202,"height":60},
+		{"id":"02e2450f74609053","type":"file","file":"Banco de Questões/Prob 5.3 - 25.md","x":960,"y":1760,"width":660,"height":640,"color":"3"},
+		{"id":"2bfce7a9b35e6b90","type":"file","file":"Banco de Questões/Prob 5.1 - 5b.md","x":960,"y":-549,"width":660,"height":640,"color":"3"},
+		{"id":"3bc454278c3f620a","type":"file","file":"Banco de Questões/Prob 5.1 - 5a.md","x":960,"y":-1305,"width":660,"height":645,"color":"4"},
+		{"id":"734fce3dad64371f","type":"file","file":"Banco de Questões/Prob 5.3 - 22.md","x":960,"y":240,"width":660,"height":640,"color":"4"},
+		{"id":"eae0c76d6a85bbb4","type":"file","file":"Banco de Questões/Prob 5.3 - 3.md","x":960,"y":1000,"width":660,"height":640,"color":"1"},
+		{"id":"7a9b4c2e1f8d3056","type":"file","file":"Banco de Questões/Prob 5.5 - 4.md","x":960,"y":2500,"width":660,"height":640,"color":"1"},
+		{"id":"2f8c263e0e404f6b","type":"text","text":"### Resolução de Equações de Diferenças (EDs)\n\n> [!info] Procedimento\n> 1. Aplique a Transformada Z unilateral em ambos os lados.\n> 2. Abra os atrasos usando as condições iniciais ($y[-1], y[-2]$).\n> 3. Isole $Y(z)$ agrupando termos de condições iniciais e da entrada.\n\n> [!quote] Classificação da Resposta\n> - **Entrada Nula ($y_0[n]$) vs Estado Nulo ($y_\\phi[n]$):**\n>   - $y_0[n]$: Depende unicamente das condições iniciais (entrada nula).\n>   - $y_\\phi[n]$: Depende unicamente da entrada $x[n]$ (condições iniciais zeradas).\n> - **Natural ($y_n[n]$) vs Forçada ($y_f[n]$):**\n>   - $y_n[n]$: Modos associados aos polos da equação homogênea (polos do próprio sistema).\n>   - $y_f[n]$: Modos associados aos polos da entrada.","x":-2240,"y":-80,"width":660,"height":640},
+		{"id":"665a004acd7e7404","type":"text","text":"### Propriedades Operacionais\n\n> [!danger] Deslocamento no Tempo (Com Condições Iniciais)\n> Não confunda com sistemas em repouso! Se houver condições passadas:\n> - **Atraso ($m > 0$):**\n>   - $x[n - 1] \\iff z^{-1}X(z) + x[-1]$\n>   - $x[n - 2] \\iff z^{-2}X(z) + z^{-1}x[-1] + x[-2]$\n>   - Geral: $x[n - m] \\iff z^{-m}X(z) + z^{-m}\\sum_{k=1}^{m} x[-k]z^k$\n> - **Avanço ($m > 0$):**\n>   - $x[n + 1] \\iff zX(z) - z x[0]$\n>   - $x[n + 2] \\iff z^2X(z) - z^2 x[0] - z x[1]$\n>   - Geral: $x[n + m] \\iff z^m X(z) - \\sum_{k=0}^{m-1} x[k] z^{m-k}$\n\n> [!tip] Operações Rápidas e Convolução\n> - **Convolução no Tempo:** $x_1[n] * x_2[n] \\iff X_1(z)X_2(z)$\n> - **Reversão no Tempo:** $x[-n] \\iff X(1/z) \\quad (\\text{RDC invertida: } \\frac{1}{r_2} < |z| < \\frac{1}{r_1})$\n> - **Multiplicação por $\\gamma^n$:** $\\gamma^n x[n] \\iff X(z/\\gamma)$\n> - **Multiplicação por $n$:** $n x[n] \\iff -z \\frac{d}{dz}X(z)$\n> - **Escalonamento Temporal (Expansão por Zeros):** $x_{(m)}[n] \\iff X(z^m)$\n> - **Soma Acumulada:** $\\sum_{k=0}^{n} x[k] \\iff \\frac{z}{z - 1}X(z) = \\frac{X(z)}{1 - z^{-1}}$\n\n> [!warning] Teoremas de Valor Inicial e Final\n> - **Valor Inicial:** $x[0] = \\lim_{z \\to \\infty} X(z)$ (Não multiplica por $z$ na frente!).\n> - **Valor Final:** $\\lim_{n \\to \\infty} x[n] = \\lim_{z \\to 1} (z - 1)X(z)$\n>   - **Atenção:** Válido **SE E SOMENTE SE** todos os polos de $(z-1)X(z)$ estiverem estritamente dentro da circunferência unitária ($|p| < 1$).","x":-2240,"y":1640,"width":660,"height":860},
+		{"id":"6d41ad10f8e31423","type":"text","text":"### Técnicas de Inversão da Transformada Z\n\n> [!danger] REGRA DE OURO: Expansão de $\\frac{X(z)}{z}$\n> As formas tabeladas têm $z$ no numerador (ex: $\\gamma^n u[n] \\leftrightarrow \\frac{z}{z-\\gamma}$).\n> **Passo a passo:**\n> 1. Divida $X(z)$ por $z \\implies \\frac{X(z)}{z}$\n> 2. Expanda em frações parciais.\n> 3. Multiplique o $z$ de volta no final antes de ir para a tabela.\n\n> [!example]- Os 3 Casos de Polos em $\\frac{X(z)}{z}$\n> - **Caso I (Polos Reais Simples):** $A_k = \\left. \\frac{X(z)}{z}(z - d_k) \\right|_{z = d_k} \\implies A_k (d_k)^n u[n]$\n> - **Caso II (Polos Complexos Conjugados $d_{1,2} = r_1 e^{\\pm j\\Omega_1}$):**\n>   Ache $A_1 = |A_1|e^{j\\angle A_1}$. A inversa imediata é:\n>   $$x[n] = 2|A_1| r_1^n \\cos(\\Omega_1 n + \\angle A_1) u[n]$$\n> - **Caso III (Polos Repetidos de multiplicidade $r$):**\n>   $$B_k = \\frac{1}{k!} \\frac{d^k}{dz^k} \\left[ \\frac{X(z)}{z}(z - \\lambda)^r \\right]_{z = \\lambda}, \\quad k = 0, \\dots, r-1$$\n\n> [!tip] Inversão por Expansão em Série de Potências (Divisão Longa)\n> Como $X(z) = x[0] + x[1]z^{-1} + x[2]z^{-2} + \\dots$:\n> - Coloque numerador e denominador em **ordem decrescente de $z$** e faça a divisão polinomial.\n> - Os coeficientes do quociente resultante são diretamente as amostras $x[0], x[1], x[2] \\dots$","x":-2240,"y":800,"width":660,"height":640},
+		{"id":"fea34cdcd1cb558c","type":"text","text":"### Função de Transferência e Estabilidade\n\n> [!info] Sistema em Repouso\n> Condições iniciais nulas ($y[-1] = \\dots = y[-N] = 0$).\n> $$H(z) = \\frac{Y(z)}{X(z)} = \\frac{b_0 + b_1 z^{-1} + \\dots + b_M z^{-M}}{1 + a_1 z^{-1} + \\dots + a_N z^{-N}}$$\n> A resposta ao impulso é $h[n] = \\mathcal{Z}^{-1}\\{H(z)\\}$.\n\n> [!success] Critérios de Estabilidade (Círculo Unitário)\n> O sistema é estável se $h[n]$ for absolutamente somável. Para sistemas causais:\n> - **Assintoticamente Estável:** TODOS os polos de $H(z)$ estão **DENTRO** da circunferência unitária ($|d_k| < 1$).\n> - **Instável:** Pelo menos UM polo **FORA** da circunferência unitária ($|d_k| > 1$) **OU** polos REPETIDOS sobre a circunferência ($|d_k| = 1$).\n> - **Marginalmente Estável:** Nenhum polo fora e apenas polos SIMPLES (não repetidos) exatamente **SOBRE** a circunferência ($|d_k| = 1$).\n\n> [!tip] Interpretação Física de Polos na Fronteira ($|z| = 1$)\n> - **Polo em $z = +1$:** Componente constante DC (degrau $u[n]$, frequência $\\Omega = 0$).\n> - **Polo em $z = -1$:** Oscilação na máxima frequência discreta possível ($\\Omega = \\pi$ rad/amostra, modo $(-1)^n$).\n> - **Polo em $z = 0$:** Não gera instabilidade! Representa atraso puro de tempo morto ($z^{-1} = \\text{delay}$).","x":-1170,"y":-80,"width":660,"height":760},
+		{"id":"be1ea7838d5eaa20","type":"text","text":"### Resposta Forçada ($y_f[n]$) e Regime Permanente ($y_{ss}[n]$)\n\n> [!tip] Cálculo Direto da Resposta Forçada $y_f[n]$\n> Desde que $H(z)$ seja finita no ponto avaliado:\n> 1. **Entrada Exponencial $x[n] = a^n u[n]$:** \n>    $$y_f[n] = H(a) a^n u[n]$$\n> 2. **Entrada Degrau $x[n] = K u[n]$ (caso especial $a=1$):** \n>    $$y_f[n] = K \\cdot H(1) u[n]$$\n> 3. **Entrada Cossenoidal $x[n] = \\cos(\\Omega n + \\theta)u[n]$:** \n>    $$y_f[n] = |H(e^{j\\Omega})| \\cos(\\Omega n + \\theta + \\angle H(e^{j\\Omega})) u[n]$$\n\n> [!danger] Condição para o Regime Permanente\n> Se (e somente se) o sistema for **ESTÁVEL**, a resposta natural decai para zero no infinito, e a saída de regime permanente coincide com a resposta forçada:\n> $$y_{ss}[n] = \\lim_{n \\to \\infty} y[n] = y_f[n]$$","x":-1170,"y":800,"width":660,"height":640},
+		{"id":"5e5ed55901eba5f3","type":"text","text":"### Sistemas Inversos e Fase Mínima\n\n> [!info] Sistema Inverso\n> Se $y[n] = x[n] * h[n]$, o sistema inverso $h_i[n]$ recupera a entrada original:\n> $$H_i(z) = \\frac{1}{H(z)}$$\n> - Os **Polos** de $H_i(z)$ são os **Zeros** de $H(z)$.\n> - Os **Zeros** de $H_i(z)$ são os **Polos** de $H(z)$.\n\n> [!danger] Condições para Inversibilidade Causal e Estável\n> Para que $H(z)$ e seu inverso $H_i(z)$ sejam **simultaneamente estáveis e causais**:\n> 1. $H(z)$ deve ser **biprópria** ($M = N$, mesmo grau no numerador e denominador).\n> 2. **Sistema de Fase Mínima:** TODOS os polos e TODOS os zeros de $H(z)$ devem estar estritamente dentro da circunferência de raio unitário ($|z| < 1$).","x":-80,"y":800,"width":660,"height":640},
+		{"id":"9f82d1c7a5b340e1","type":"text","text":"### Ponte Plano $s \\longleftrightarrow$ Plano $z$ & Amostragem\n\n> [!info] O Mapeamento Conformal Fundamental\n> A amostragem de um sinal contínuo com período $T$ ($x[n] = x(nT)$) estabelece a relação:\n> $$z = e^{sT} = e^{(\\sigma + j\\omega)T} = e^{\\sigma T} e^{j\\omega T}$$\n> - **Módulo:** $|z| = e^{\\sigma T}$\n> - **Ângulo (Frequência Discreta):** $\\Omega = \\omega T \\quad [\\text{rad/amostra}]$\n\n> [!success] Correspondência Geométrica de Estabilidade\n> - **SPE no Plano $s$ ($\\sigma < 0$):**\n>   $$|z| = e^{\\sigma T} < 1 \\implies \\textbf{Interior do Círculo Unitário}$$\n> - **Eixo Imaginário no Plano $s$ ($\\sigma = 0$):**\n>   $$|z| = e^{0} = 1 \\implies \\textbf{Circunferência Unitária } (|z| = 1)$$\n> - **SPD no Plano $s$ ($\\sigma > 0$):**\n>   $$|z| = e^{\\sigma T} > 1 \\implies \\textbf{Exterior do Círculo Unitário}$$\n\n> [!warning] Aliasing e Faixa de Nyquist\n> Conforme $\\omega$ varia de $-\\frac{\\omega_s}{2}$ a $+\\frac{\\omega_s}{2}$ (onde $\\omega_s = \\frac{2\\pi}{T}$):\n> - O ângulo $\\Omega = \\omega T$ percorre o círculo unitário de $-\\pi$ a $+\\pi$.\n> - Múltiplos de $\\omega_s$ mapeiam no mesmo ponto em $z$, refletindo a **periodicidade inerente** da amostragem (frequências discretas são unívocas apenas em $-\\pi \\le \\Omega \\le \\pi$).","x":-80,"y":-80,"width":660,"height":640},
+		{"id":"d3a1f8c4e7b29056","type":"text","text":"### Estabilidade Algébrica: Jury & Transformação Bilinear\n\n> [!info] O Desafio\n> Determinar se todos os polos de $H(z) = \\frac{P(z)}{Q(z)}$ estão estritamente dentro da circunferência unitária ($|z| < 1$) para $Q(z) = a_n z^n + \\dots + a_1 z + a_0 = 0$ **sem fatorar raízes**.\n\n> [!tip] Teste de Estabilidade de Jury (Direto em $z$)\n> 1. **Condições Prévias Obrigatórias (Necessárias):**\n>    - $Q(1) > 0$\n>    - $(-1)^n Q(-1) > 0$\n>    - $|a_0| < a_n$\n> 2. **Tabela de Jury:** Se $n \\ge 3$, monta-se a tabela de coeficientes com $2n-3$ linhas. Para estabilidade, as restrições de determinantes devem ser satisfeitas em cada linha par: $|b_0| > |b_{n-1}|$, $|c_0| > |c_{n-2}|$, etc.\n\n> [!example] Método Alternativo: Transformação Bilinear (Möbius)\n> Como Routh-Hurwitz só se aplica a semiplanos, usa-se a transformação conforme:\n> $$z = \\frac{w + 1}{w - 1} \\quad \\left(\\text{ou } w = \\frac{z - 1}{z + 1}\\right)$$\n> - Essa substituição mapeia o **interior do círculo unitário** ($|z| < 1$) diretamente no **SPE do plano $w$** ($\\text{Re}\\{w\\} < 0$).\n> - **Procedimento:**\n>   1. Substitua $z = \\frac{w+1}{w-1}$ em $Q(z)$ e elimine os denominadores: $(w-1)^n Q\\left(\\frac{w+1}{w-1}\\right) = Q'(w) = 0$.\n>   2. Aplique a **Tabela clássica de Routh-Hurwitz** diretamente sobre o polinômio $Q'(w)$!","x":-80,"y":1640,"width":660,"height":640},
+		{"id":"b8c5e2a9f1473062","type":"text","text":"### Realização Discreta & Resposta Degrau\n\n> [!tip] Resposta ao Degrau Discreto ($g[n]$) vs Impulso ($h[n]$)\n> Como o degrau discreto é a soma acumulada do impulso ($u[n] = \\sum_{k=0}^n \\delta[k]$):\n> $$g[n] = \\sum_{k=0}^n h[k] = \\mathcal{Z}^{-1}\\left\\{\\frac{z}{z-1}H(z)\\right\\} \\iff h[n] = g[n] - g[n-1]$$\n> *(A resposta ao impulso é simplesmente a primeira diferença da resposta ao degrau).* \n\n> [!info] Elementos Básicos de Implementação\n> Sistemas em tempo discreto são sintetizados em hardware/software por:\n> 1. **Atrasos Unitários ($z^{-1}$):** Registradores de memória que armazenam a amostra anterior.\n> 2. **Multiplicadores de Ganho** (coeficientes $a_k, b_k$).\n> 3. **Somadores.**\n\n> [!example]- As 4 Formas de Realização do Lathi\n> - **Forma Direta I:** Separa os atrasos dos polos e dos zeros (requer $N + M$ blocos de atraso).\n> - **Forma Direta II (Canônica):** Compartilha os atrasos para polos e zeros. Requer o **número mínimo de atrasos** ($N = \\text{ordem da ED}$).\n> - **Forma Cascata:** $H(z) = H_1(z) H_2(z) \\dots H_k(z)$ fatorado em blocos biquadráticos (2ª ordem) para evitar sensibilidade numérica aos coeficientes.\n> - **Forma Paralela:** $H(z) = c_0 + \\sum \\frac{A_k z}{z - d_k}$ (bancos paralelos somados).","x":-1170,"y":1640,"width":660,"height":640}
+	],
+	"edges":[
+		{"id":"d62a23c3353d7999","fromNode":"11dffe7570c29f09","fromSide":"bottom","toNode":"fd821a27a1d541bf","toSide":"top","label":"Fundamento matemático"},
+		{"id":"ac364952381a1a8f","fromNode":"fd821a27a1d541bf","fromSide":"bottom","toNode":"fea34cdcd1cb558c","toSide":"top","label":"Polos no\ncírculo unitário"},
+		{"id":"22c73cfa7c0be258","fromNode":"fea34cdcd1cb558c","fromSide":"bottom","toNode":"be1ea7838d5eaa20","toSide":"top","label":"SE polos com |p| < 1"},
+		{"id":"9d2098d369c4a153","fromNode":"fea34cdcd1cb558c","fromSide":"right","toNode":"5e5ed55901eba5f3","toSide":"top","label":"Recíproco 1/H(z)"},
+		{"id":"3d8438d09543bd50","fromNode":"6d41ad10f8e31423","fromSide":"bottom","toNode":"665a004acd7e7404","toSide":"top","label":"Pares da Tabela"},
+		{
+			"id":"66de874c1c16e10c",
+			"toFloating":false,
+			"styleAttributes":{"pathfindingMethod":"a-star"},
+			"fromNode":"fea34cdcd1cb558c",
+			"fromSide":"right",
+			"toNode":"734fce3dad64371f",
+			"toSide":"left",
+			"color":"4",
+			"label":"ED para H[z] (Repouso)"
+		},
+		{
+			"id":"049a883c1845b375",
+			"styleAttributes":{
+				"path":null,
+				"pathfindingMethod":"square"
+			},
+			"toFloating":false,
+			"fromFloating":false,
+			"fromNode":"6d41ad10f8e31423",
+			"fromSide":"left",
+			"toNode":"3bc454278c3f620a",
+			"toSide":"top",
+			"color":"4",
+			"label":"Expansão\nclássica X(z)/z"
+		},
+		{
+			"id":"9ba79bbf4369e9fd",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"toFloating":false,
+			"fromFloating":false,
+			"fromNode":"6d41ad10f8e31423",
+			"fromSide":"top",
+			"toNode":"2bfce7a9b35e6b90",
+			"toSide":"left",
+			"color":"3",
+			"label":"Pegadinha: Sem 'z'\nno numerador"
+		},
+		{
+			"id":"faf64f3e21077973",
+			"styleAttributes":{
+				"pathfindingMethod":"square",
+				"path":null
+			},
+			"toFloating":false,
+			"fromFloating":false,
+			"fromNode":"2f8c263e0e404f6b",
+			"fromSide":"right",
+			"toNode":"eae0c76d6a85bbb4",
+			"toSide":"left",
+			"color":"1",
+			"label":"ED de 2ª ordem\ncom C.I."
+		},
+		{
+			"id":"2678a76d0bef1958",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"toFloating":false,
+			"fromNode":"5e5ed55901eba5f3",
+			"fromSide":"right",
+			"toNode":"02e2450f74609053",
+			"toSide":"left",
+			"color":"3",
+			"label":"Inversão e Causalidade"
+		},
+		{
+			"id":"f0a1b2c3d4e5f678",
+			"styleAttributes":{"pathfindingMethod":"square"},
+			"fromNode":"fea34cdcd1cb558c",
+			"fromSide":"left",
+			"toNode":"665a004acd7e7404",
+			"toSide":"right",
+			"color":"1",
+			"label":"Polos dentro de\n|z|=1 antes do TVF!"
+		},
+		{
+			"id":"9df42dbd43023d3b",
+			"styleAttributes":{},
+			"toFloating":false,
+			"fromNode":"2f8c263e0e404f6b",
+			"fromSide":"right",
+			"toNode":"6d41ad10f8e31423",
+			"toSide":"right",
+			"label":"Inverter componentes\ncom X(z)/z"
+		},
+		{"id":"a4f7c189b25e3061","fromNode":"fea34cdcd1cb558c","fromSide":"right","toNode":"9f82d1c7a5b340e1","toSide":"left","label":"Mapeamento z = e^(sT)"},
+		{"id":"e2b9f4a7c1803562","fromNode":"fea34cdcd1cb558c","fromSide":"bottom","toNode":"d3a1f8c4e7b29056","toSide":"top","color":"1","label":"Testar |z| < 1 sem fatorar\n(Jury / Bilinear)"},
+		{"id":"c7a1e5f8b9402361","fromNode":"be1ea7838d5eaa20","fromSide":"bottom","toNode":"b8c5e2a9f1473062","toSide":"top","label":"Síntese em blocos z^(-1)\ne Degrau x Impulso"},
+		{"id":"f8a1c3e5b7d92044","fromNode":"d3a1f8c4e7b29056","fromSide":"right","toNode":"7a9b4c2e1f8d3056","toSide":"left","color":"1","label":"Determinação de K\n(Jury e Bilinear)"}
+	],
+	"metadata":{
+		"version":"1.0-1.0",
+		"frontmatter":{}
+	}
+}

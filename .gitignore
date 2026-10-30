@@ -1,0 +1,4 @@
+# Configurações e caches locais do Obsidian
+.obsidian/
+.trash/
+.DS_Store
